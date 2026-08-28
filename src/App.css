@@ -1,0 +1,281 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=IBM+Plex+Mono:wght@400;600&display=swap');
+
+:root {
+  --paper: #E8E6DC;
+  --card: #F5F4EC;
+  --ink: #22261F;
+  --alive: #2F6F4E;
+  --gold: #D9A441;
+  --gold-glow: #F0C766;
+  --broken: #9B4F3C;
+  --muted: #8A8A78;
+  --border: #D6D3C4;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.app {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 48px 20px 80px;
+}
+
+.app-header {
+  margin-bottom: 32px;
+}
+
+.app-header h1 {
+  font-family: 'Fraunces', serif;
+  font-size: 3rem;
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.tagline {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin: 4px 0 0;
+}
+
+/* Form */
+.habit-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 32px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 140px;
+}
+
+.field label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+
+.field input {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 9px 10px;
+  font-size: 0.95rem;
+  background: white;
+  color: var(--ink);
+}
+
+.field input:focus {
+  outline: 2px solid var(--alive);
+  outline-offset: 1px;
+}
+
+.habit-form button {
+  background: var(--alive);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 18px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.habit-form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.form-error {
+  color: var(--broken);
+  font-size: 0.85rem;
+  width: 100%;
+  margin: 0;
+}
+
+/* List / empty state */
+.loading, .empty-state {
+  text-align: center;
+  color: var(--muted);
+  padding: 40px 0;
+}
+
+.empty-sub {
+  font-size: 0.85rem;
+}
+
+.habit-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Card */
+.habit-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px 20px;
+}
+
+.habit-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.habit-card h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 1.3rem;
+  margin: 0;
+}
+
+.habit-desc {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin: 2px 0 0;
+}
+
+/* Mark-done button, top-right of card */
+.done-btn {
+  background: var(--alive);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  font-size: 0.82rem;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.done-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.done-btn.done {
+  background: var(--alive);
+}
+
+/* Streak chain — signature element */
+.streak-chain {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.bead {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--border);
+  position: relative;
+}
+
+.bead.filled {
+  background: var(--gold);
+}
+
+/* forgiven single-day gap: hollow ring, not a flat miss */
+.bead.forgiven {
+  background: transparent;
+  border: 2px solid var(--gold);
+}
+
+/* today: distinct regardless of completion state */
+.bead.today {
+  width: 18px;
+  height: 18px;
+}
+
+.bead.today.filled {
+  background: var(--gold-glow);
+  box-shadow: 0 0 0 3px rgba(240, 199, 102, 0.35), 0 0 10px 2px rgba(240, 199, 102, 0.5);
+}
+
+.bead.today:not(.filled) {
+  border: 2px dashed var(--muted);
+  animation: pulse-today 2s ease-in-out infinite;
+}
+
+@keyframes pulse-today {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.bead:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  width: 4px;
+  height: 2px;
+  background: var(--border);
+  transform: translateY(-50%);
+}
+
+.habit-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.streak-numbers {
+  display: flex;
+  gap: 16px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.streak-numbers strong {
+  color: var(--ink);
+  font-size: 1rem;
+}
+
+/* Delete, quiet icon-only button */
+.delete-btn {
+  background: none;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.delete-btn:hover {
+  color: var(--broken);
+}
+
+.delete-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
