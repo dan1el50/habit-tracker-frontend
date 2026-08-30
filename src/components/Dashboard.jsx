@@ -24,6 +24,11 @@ export default function Dashboard() {
 
     return (
         <>
+            <header className="app-header">
+                <h1>Chain</h1>
+                <p className="tagline">Every day is a bead. Don't drop the thread.</p>
+            </header>
+
             <button className="add-habit-btn" onClick={() => setModalOpen(true)}>
                 + Add habit
             </button>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { api } from '../api';
-import StreakChain from './StreakChain';
+//import StreakChain from './StreakChain';
 import MilestonesBox from './MilestonesBox';
 
 export default function HabitDetail() {
@@ -95,8 +95,9 @@ export default function HabitDetail() {
                 </button>
             </div>
 
-            <StreakChain entries={entries} />
-
+            {/* Streak chain section from the detailed habit stats page. Uncomment the import at the top of the file
+                <StreakChain entries={entries}/>
+             */}
             <div className="streaks-box">
                 <div className="streak-stat">
                     <span className="streak-stat-value">{stats.currentStreak}</span>
@@ -104,7 +105,7 @@ export default function HabitDetail() {
                 </div>
                 <div className="streak-stat">
                     <span className="streak-stat-value">{stats.longestStreak}</span>
-                    <span className="streak-stat-label">Longest streak ever</span>
+                    <span className="streak-stat-label">Longest streak</span>
                 </div>
             </div>
 

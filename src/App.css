@@ -37,6 +37,7 @@ body {
   font-weight: 600;
   margin: 0;
   letter-spacing: -0.02em;
+  color: var(--ink);
 }
 
 .tagline {
@@ -50,7 +51,7 @@ body {
   display: block;
   width: 100%;
   background: var(--alive);
-  color: white;
+  color: var(--card);
   border: none;
   border-radius: 8px;
   padding: 14px 18px;
@@ -109,7 +110,7 @@ body {
 
 .habit-form button[type='submit'] {
   background: var(--alive);
-  color: white;
+  color: var(--card);
   border: none;
   border-radius: 6px;
   padding: 11px 18px;
@@ -164,6 +165,7 @@ body {
   font-family: 'Fraunces', serif;
   font-size: 1.4rem;
   margin: 0;
+  color: var(--ink);
 }
 
 .modal-close {
@@ -232,6 +234,7 @@ body {
   font-family: 'Fraunces', serif;
   font-size: 1.15rem;
   margin: 0;
+  color: var(--ink);
 }
 
 .habit-card-compact-footer {
@@ -255,7 +258,7 @@ body {
 /* Mark-done button */
 .done-btn {
   background: var(--alive);
-  color: white;
+  color: var(--card);
   border: none;
   cursor: pointer;
   font-weight: 600;
@@ -368,6 +371,7 @@ body {
   font-size: 1.6rem;
   margin: 0 0 4px;
   line-height: 1.25;
+  color: var(--ink);
 }
 
 .detail-subname {
