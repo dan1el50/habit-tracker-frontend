@@ -18,6 +18,7 @@ async function request(path, options = {}) {
 
 export const api = {
     getHabits: () => request('/habits'),
+    getHabit: (id) => request(`/habits/${id}`),
     createHabit: (data) => request('/habits', { method: 'POST', body: JSON.stringify(data) }),
     deleteHabit: (id) => request(`/habits/${id}`, { method: 'DELETE' }),
     getStats: (habitId) => request(`/habits/${habitId}/stats`),

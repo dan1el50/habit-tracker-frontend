@@ -1,6 +1,6 @@
 import HabitCard from './HabitCard';
 
-export default function HabitList({ habits, onDeleted }) {
+export default function HabitGrid({ habits }) {
     if (habits.length === 0) {
         return (
             <div className="empty-state">
@@ -11,9 +11,9 @@ export default function HabitList({ habits, onDeleted }) {
     }
 
     return (
-        <div className="habit-list">
+        <div className="habit-grid">
             {habits.map((habit) => (
-                <HabitCard key={habit.id} habit={habit} onDeleted={onDeleted} />
+                <HabitCard key={habit.id} habit={habit} />
             ))}
         </div>
     );
