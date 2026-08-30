@@ -45,25 +45,36 @@ body {
   margin: 4px 0 0;
 }
 
-/* Form */
+/* Add habit button */
+.add-habit-btn {
+  display: block;
+  width: 100%;
+  background: var(--alive);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 14px 18px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 24px;
+}
+
+.add-habit-btn:hover {
+  background: #285c40;
+}
+
+/* Form (used inside the modal) */
 .habit-form {
   display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  align-items: flex-end;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 16px;
-  margin-bottom: 32px;
+  flex-direction: column;
+  gap: 14px;
 }
 
 .field {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  flex: 1;
-  min-width: 140px;
 }
 
 .field label {
@@ -73,33 +84,42 @@ body {
   color: var(--muted);
 }
 
-.field input {
+.field input,
+.field select {
   border: 1px solid var(--border);
   border-radius: 6px;
   padding: 9px 10px;
   font-size: 0.95rem;
   background: white;
   color: var(--ink);
+  font-family: inherit;
 }
 
-.field input:focus {
+.field input:focus,
+.field select:focus {
   outline: 2px solid var(--alive);
   outline-offset: 1px;
 }
 
-.habit-form button {
+.field select:disabled {
+  color: var(--muted);
+  background: var(--code-bg, #f4f3ec);
+  cursor: not-allowed;
+}
+
+.habit-form button[type='submit'] {
   background: var(--alive);
   color: white;
   border: none;
   border-radius: 6px;
-  padding: 10px 18px;
+  padding: 11px 18px;
   font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
   white-space: nowrap;
 }
 
-.habit-form button:disabled {
+.habit-form button[type='submit']:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
@@ -109,6 +129,55 @@ body {
   font-size: 0.85rem;
   width: 100%;
   margin: 0;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(34, 38, 31, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 100;
+}
+
+.modal {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 22px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.modal-header h2 {
+  font-family: 'Fraunces', serif;
+  font-size: 1.4rem;
+  margin: 0;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 0 4px;
+}
+
+.modal-close:hover {
+  color: var(--ink);
 }
 
 /* List / empty state */
@@ -122,41 +191,68 @@ body {
   font-size: 0.85rem;
 }
 
-.habit-list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+/* Dashboard grid */
+.habit-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
 }
 
-/* Card */
-.habit-card {
+@media (max-width: 480px) {
+  .habit-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Compact card */
+.habit-card-compact {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 10px;
-  padding: 18px 20px;
-}
-
-.habit-card-header {
+  padding: 16px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, transform 0.15s ease;
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 12px;
-  margin-bottom: 14px;
+  flex-direction: column;
+  gap: 14px;
 }
 
-.habit-card h3 {
+.habit-card-compact:hover,
+.habit-card-compact:focus-visible {
+  border-color: var(--alive);
+  transform: translateY(-1px);
+}
+
+.habit-card-compact:focus-visible {
+  outline: 2px solid var(--alive);
+  outline-offset: 2px;
+}
+
+.habit-card-compact h3 {
   font-family: 'Fraunces', serif;
-  font-size: 1.3rem;
+  font-size: 1.15rem;
   margin: 0;
 }
 
-.habit-desc {
-  color: var(--muted);
-  font-size: 0.85rem;
-  margin: 2px 0 0;
+.habit-card-compact-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
 }
 
-/* Mark-done button, top-right of card */
+.current-streak {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.current-streak strong {
+  color: var(--ink);
+  font-size: 1rem;
+}
+
+/* Mark-done button */
 .done-btn {
   background: var(--alive);
   color: white;
@@ -178,16 +274,17 @@ body {
   cursor: not-allowed;
 }
 
-.done-btn.done {
-  background: var(--alive);
+.done-btn.large {
+  padding: 10px 20px;
+  font-size: 0.9rem;
 }
 
-/* Streak chain — signature element */
+/* Streak chain */
 .streak-chain {
   display: flex;
   align-items: center;
   gap: 4px;
-  margin-bottom: 14px;
+  margin: 20px 0;
   flex-wrap: wrap;
 }
 
@@ -203,13 +300,11 @@ body {
   background: var(--gold);
 }
 
-/* forgiven single-day gap: hollow ring, not a flat miss */
 .bead.forgiven {
   background: transparent;
   border: 2px solid var(--gold);
 }
 
-/* today: distinct regardless of completion state */
 .bead.today {
   width: 18px;
   height: 18px;
@@ -241,41 +336,157 @@ body {
   transform: translateY(-50%);
 }
 
-.habit-card-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+/* Detail view */
+.habit-detail {
+  text-align: left;
 }
 
-.streak-numbers {
-  display: flex;
-  gap: 16px;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.85rem;
-  color: var(--muted);
-}
-
-.streak-numbers strong {
-  color: var(--ink);
-  font-size: 1rem;
-}
-
-/* Delete, quiet icon-only button */
-.delete-btn {
+.back-link {
   background: none;
   border: none;
   color: var(--muted);
+  font-size: 0.85rem;
   cursor: pointer;
-  padding: 4px;
-  display: flex;
-  align-items: center;
+  padding: 0;
+  margin-bottom: 20px;
 }
 
-.delete-btn:hover {
+.back-link:hover {
+  color: var(--ink);
+}
+
+.detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.detail-header h2 {
+  font-family: 'Fraunces', serif;
+  font-size: 1.6rem;
+  margin: 0 0 4px;
+  line-height: 1.25;
+}
+
+.detail-subname {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin: 0 0 6px;
+}
+
+.detail-created {
+  color: var(--muted);
+  font-size: 0.8rem;
+  margin: 0;
+}
+
+/* Streaks box */
+.streaks-box {
+  display: flex;
+  gap: 12px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px;
+  margin-bottom: 20px;
+}
+
+.streak-stat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
+}
+
+.streak-stat:first-child {
+  border-right: 1px solid var(--border);
+}
+
+.streak-stat-value {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.streak-stat-label {
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Milestones box */
+.milestones-box {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px;
+  margin-bottom: 24px;
+}
+
+.milestones-box h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 1.05rem;
+  margin: 0 0 14px;
+}
+
+.milestones-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+}
+
+@media (max-width: 420px) {
+  .milestones-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.milestone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: var(--border);
+}
+
+.milestone.unlocked {
+  color: var(--gold);
+}
+
+.milestone-days {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+.milestone.unlocked .milestone-days {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* Delete link, quiet destructive action */
+.delete-link {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 0.82rem;
+  cursor: pointer;
+  padding: 4px 0;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.delete-link:hover {
   color: var(--broken);
 }
 
-.delete-btn:disabled {
+.delete-link:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
