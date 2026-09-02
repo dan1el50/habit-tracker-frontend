@@ -1,8 +1,12 @@
 const BASE_URL = `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080'}/api`;
 
 async function request(path, options = {}) {
+    const token = localStorage.getItem('token');
     const res = await fetch(`${BASE_URL}${path}`, {
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+            'Content-Type': 'application/json',
+            ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
         ...options,
     });
 
@@ -11,12 +15,14 @@ async function request(path, options = {}) {
         throw new Error(body.message || `Request failed: ${res.status}`);
     }
 
-    // DELETE returns no body
     if (res.status === 204 || options.method === 'DELETE') return null;
     return res.json();
 }
 
 export const api = {
+    register: (data) => request('/auth/register', { method: 'POST', body: JSON.stringify(data) }),
+    login: (data) => request('/auth/login', { method: 'POST', body: JSON.stringify(data) }),
+
     getHabits: () => request('/habits'),
     getHabit: (id) => request(`/habits/${id}`),
     createHabit: (data) => request('/habits', { method: 'POST', body: JSON.stringify(data) }),

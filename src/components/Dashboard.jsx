@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { api } from '../api';
+import { useAuth } from '../context/AuthContext';
 import HabitGrid from './HabitGrid';
 import AddHabitModal from './AddHabitModal';
 
@@ -8,6 +9,7 @@ export default function Dashboard() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
+    const { user, logout } = useAuth();
 
     useEffect(() => {
         api.getHabits()
@@ -25,8 +27,16 @@ export default function Dashboard() {
     return (
         <>
             <header className="app-header">
-                <h1>Chain</h1>
-                <p className="tagline">Every day is a bead. Don't drop the thread.</p>
+                <div className="app-header-top">
+                    <div>
+                        <h1>Chain</h1>
+                        <p className="tagline">Every day is a bead. Don't drop the thread.</p>
+                    </div>
+                    <div className="user-menu">
+                        {user && <span className="user-name">{user.name}</span>}
+                        <button className="logout-btn" onClick={logout}>Log out</button>
+                    </div>
+                </div>
             </header>
 
             <button className="add-habit-btn" onClick={() => setModalOpen(true)}>
