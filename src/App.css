@@ -494,3 +494,55 @@ body {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+.app-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.user-name {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.logout-btn {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.logout-btn:hover {
+  border-color: var(--broken);
+  color: var(--broken);
+}
+
+.auth-page {
+  max-width: 360px;
+  margin: 60px auto 0;
+  text-align: left;
+}
+
+.auth-page h2 {
+  font-family: 'Fraunces', serif;
+  margin-bottom: 18px;
+}
+
+.auth-page p {
+  margin-top: 16px;
+  font-size: 0.85rem;
+  color: var(--muted);
+  text-align: center;
+}
